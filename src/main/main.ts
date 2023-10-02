@@ -25,10 +25,9 @@ class AppUpdater {
 
 let mainWindow: BrowserWindow | null = null;
 
-ipcMain.on('ipc-example', async (event, arg) => {
-  const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
-  console.log(msgTemplate(arg));
-  event.reply('ipc-example', msgTemplate('pong'));
+ipcMain.on('acc:reload', async (event) => {
+  console.log('acc:reload reloading accounts');
+  event.reply('acc:reload', 'reloaded jsosn file');
 });
 
 if (process.env.NODE_ENV === 'production') {
@@ -96,7 +95,7 @@ const createWindow = async () => {
     } else {
       mainWindow.show();
     }
-    mainWindow.webContents.send('acc:reload', { width: WIDTH });
+    mainWindow.webContents.send('acc:reload', 'first json file');
   });
 
   mainWindow.on('closed', () => {

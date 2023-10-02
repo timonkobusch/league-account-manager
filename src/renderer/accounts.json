@@ -1,0 +1,67 @@
+[
+  {
+    "username": "Ttenekiena",
+    "password": "234234",
+    "displayName": "Short",
+    "server": "RU",
+    "timesChecked": 0,
+    "data": {
+      "solo": {
+        "league": "Unranked",
+        "lp": 0,
+        "win": 0,
+        "lose": 0
+      },
+      "flex": {
+        "league": "Unranked",
+        "lp": 0,
+        "win": 0,
+        "lose": 0
+      },
+      "aram": { "mmr": 2503 }
+    }
+  },
+  {
+    "username": "medebryn",
+    "password": "53534",
+    "displayName": "LongLonglongLong",
+    "server": "EUW",
+    "timesChecked": 0,
+    "data": {
+      "solo": {
+        "league": "Unranked",
+        "lp": 0,
+        "win": 0,
+        "lose": 0
+      },
+      "flex": {
+        "league": "Unranked",
+        "lp": 0,
+        "win": 0,
+        "lose": 0
+      }
+    }
+  },
+  {
+    "username": "asdfasfdsafd",
+    "password": "f343423s",
+    "displayName": "Gregory Garage",
+    "server": "EUW",
+    "timesChecked": 0,
+    "data": {
+      "solo": {
+        "league": "Unranked",
+        "lp": 0,
+        "win": 0,
+        "lose": 0
+      },
+      "flex": {
+        "league": "Unranked",
+        "lp": 0,
+        "win": 0,
+        "lose": 0
+      },
+      "aram": { "mmr": 1500 }
+    }
+  }
+]
