@@ -9,11 +9,14 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import { app, BrowserWindow, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
+import registerListeners from './listeners';
+
+registerListeners();
 
 class AppUpdater {
   constructor() {
@@ -24,11 +27,6 @@ class AppUpdater {
 }
 
 let mainWindow: BrowserWindow | null = null;
-
-ipcMain.on('acc:reload', async (event) => {
-  console.log('acc:reload reloading accounts');
-  event.reply('acc:reload', 'reloaded jsosn file');
-});
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -95,7 +93,6 @@ const createWindow = async () => {
     } else {
       mainWindow.show();
     }
-    mainWindow.webContents.send('acc:reload', 'first json file');
   });
 
   mainWindow.on('closed', () => {

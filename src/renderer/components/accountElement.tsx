@@ -8,7 +8,13 @@ import { Account } from '../../interface/accounts.interface';
 const rankedIcon = require('../../../assets/rankIcons/Diamond.webp').default;
 
 export default function AccountElement({ account }: { account: Account }) {
-  console.log(rankedIcon);
+  const writeClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+  };
+
+  const deleteAccount = (user: string, server: string) => {
+    window.electron.textHandler.sendMessage('acc:delete', user, server);
+  };
   return (
     <li className="group/item drop-shadow-lg hover:border-gray-500 border transition-all duration-150 list-none flex flex-row flex-nowrap w-full text-lg items-center justify-around rounded-xl bg-white py-4 pr-0 pl-4">
       <div className="max-h-24 gap-1 flex flex-col items-start w-48 font-medium">
@@ -32,6 +38,9 @@ export default function AccountElement({ account }: { account: Account }) {
         <button
           type="button"
           className="transition h-7 w-24 text-white  bg-blue-700 hover:bg-blue-800 rounded-lg px-2 py-1 text-sm"
+          onClick={() => {
+            writeClipboard(account.username);
+          }}
         >
           username
         </button>
@@ -39,6 +48,9 @@ export default function AccountElement({ account }: { account: Account }) {
         <button
           type="button"
           className="transition h-7 w-24 text-white bg-blue-700 hover:bg-blue-800 rounded-lg px-2 py-1 text-sm"
+          onClick={() => {
+            writeClipboard(account.password);
+          }}
         >
           password
         </button>
@@ -53,6 +65,9 @@ export default function AccountElement({ account }: { account: Account }) {
         <button
           type="button"
           className="opacity-0 group-hover/edit:opacity-100 group-hover/edit:translate-y-0 -translate-y-3 hover:text-red-500 hover:text-bold transition duration-150 ease-in-out"
+          onClick={() => {
+            deleteAccount(account.username, account.server);
+          }}
         >
           <AiOutlineMinusCircle size={20} />
         </button>

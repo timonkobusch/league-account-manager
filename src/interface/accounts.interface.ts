@@ -16,5 +16,5 @@ export type Account = {
   displayName: string;
   server: string;
   timesChecked: number;
-  data: Data;
+  data?: Data;
 };
