@@ -20,7 +20,7 @@ export default function AccountElement({ account }: { account: Account }) {
       <div className="max-h-24 gap-1 flex flex-col items-start w-48 font-medium">
         <div className="font-medium">{account.displayName}</div>
         <div className="flex items-center justify-center font-medium h-7 text-blue-700 border border-blue-700 rounded-lg px-2 py-1 text-sm">
-          {account.server}
+          {account.displayTag}
         </div>
       </div>
       <img className="h-20 w-20 mx-2" src={rankedIcon} alt="ranked icon" />

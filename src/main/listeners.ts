@@ -26,13 +26,12 @@ const accounts: Account[] = readAccountsFromFile();
 export default function registerListeners() {
   ipcMain.on(
     'acc:add',
-    async (event, displayName, username, password, server) => {
+    async (event, displayName, displayTag, username, password) => {
       const newAccount: Account = {
         username,
         displayName,
+        displayTag,
         password,
-        server,
-        timesChecked: 0,
       };
 
       accounts.push(newAccount);
@@ -48,9 +47,9 @@ export default function registerListeners() {
     event.reply('acc:reload', accounts);
   });
 
-  ipcMain.on('acc:delete', async (event, user, server) => {
+  ipcMain.on('acc:delete', async (event, user) => {
     accounts.forEach((account, index) => {
-      if (account.username === user && account.server === server) {
+      if (account.username === user) {
         accounts.splice(index, 1);
       }
     });

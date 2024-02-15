@@ -1,20 +1,18 @@
-interface Queue {
+interface QueueData {
   league: string;
   lp: number;
   win: number;
   lose: number;
 }
 interface Data {
-  solo?: Queue;
-  flex?: Queue;
-  aram?: { mmr: number };
+  solo?: QueueData;
+  flex?: QueueData;
 }
 
 export type Account = {
   username: string;
   password: string;
   displayName: string;
-  server: string;
-  timesChecked: number;
+  displayTag: string;
   data?: Data;
 };
