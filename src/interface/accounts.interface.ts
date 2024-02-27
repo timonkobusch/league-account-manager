@@ -4,7 +4,7 @@ interface QueueData {
   win: number;
   lose: number;
 }
-interface Data {
+export interface Data {
   solo?: QueueData;
   flex?: QueueData;
 }
@@ -12,6 +12,7 @@ interface Data {
 export type Account = {
   username: string;
   password: string;
+  server: string;
   displayName: string;
   displayTag: string;
   data?: Data;

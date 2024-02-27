@@ -6,54 +6,38 @@ import { Account } from '../interface/accounts.interface';
 export type Channels = 'acc:reload';
 
 const electronHandler = {
-  textHandler: {
-    sendMessage(channel: 'acc:delete' | 'acc:add', ...args: string[]) {
-      ipcRenderer.send(channel, ...args);
-    },
-    on(channel: Channels, func: (args: string) => void) {
-      const subscription = (_event: IpcRendererEvent, args: string) =>
-        func(args);
-      ipcRenderer.on(channel, subscription);
-
-      return () => {
-        ipcRenderer.removeListener(channel, subscription);
-      };
-    },
-    once(channel: Channels, func: (...args: unknown[]) => void) {
-      ipcRenderer.once(channel, (_event, ...args) => func(...args));
-    },
-  },
-  accountHandler: {
-    sendMessage(channel: Channels) {
-      ipcRenderer.send(channel);
+  accountChangeHandler: {
+    sendMessage(channel: 'acc:edit' | 'acc:delete' | 'acc:add', arg: Account) {
+      ipcRenderer.send(channel, arg);
     },
     on(
-      channel: 'acc:reload',
-      func: (
-        accs: Account[],
-        successful: boolean,
-        reportMessage: string
-      ) => void
+      channel: 'acc:edit' | 'acc:delete' | 'acc:add',
+      func: (acc: Account) => void
     ) {
-      const subscription = (
-        _event: IpcRendererEvent,
-        accs: Account[],
-        success: boolean,
-        message: string
-      ) => func(accs, success, message);
+      const subscription = (_event: IpcRendererEvent, acc: Account) =>
+        func(acc);
       ipcRenderer.on(channel, subscription);
 
       return () => {
         ipcRenderer.removeListener(channel, subscription);
       };
     },
-    once(
-      channel: 'acc:reload',
-      func: (accs: Account[], success: boolean, message: string) => void
-    ) {
-      ipcRenderer.once(channel, (_event, accs, success, message) =>
-        func(accs, success, message)
-      );
+  },
+  accountLoadHandler: {
+    sendMessage(channel: 'acc:reload' | 'acc:load', ...args: string[]) {
+      ipcRenderer.send(channel, ...args);
+    },
+    on(channel: 'acc:reload' | 'acc:load', func: (accs: Account[]) => void) {
+      const subscription = (_event: IpcRendererEvent, accs: Account[]) =>
+        func(accs);
+      ipcRenderer.on(channel, subscription);
+
+      return () => {
+        ipcRenderer.removeListener(channel, subscription);
+      };
+    },
+    once(channel: 'acc:reload' | 'acc:load', func: (accs: Account[]) => void) {
+      ipcRenderer.once(channel, (_event, accs) => func(accs));
     },
   },
 };

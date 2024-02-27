@@ -10,12 +10,7 @@ export default function AccountList({ accounts }: AccountListProps) {
       {accounts &&
         accounts.length > 0 &&
         accounts.map((account: Account) => {
-          return (
-            <AccountElement
-              key={account.username + account.server}
-              account={account}
-            />
-          );
+          return <AccountElement key={account.username} account={account} />;
         })}
       ;
     </ul>

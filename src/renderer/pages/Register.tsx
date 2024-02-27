@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { MdOutlineArrowBackIos } from 'react-icons/md';
 import { FormEvent } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
+import { Account } from 'interface/accounts.interface';
 
 const InputField = ({
   label,
@@ -38,7 +39,6 @@ export default function About() {
     const formData = new FormData(event.target as HTMLFormElement);
     const formJSON = Object.fromEntries(formData.entries());
     const { summoner, username, password } = formJSON;
-    console.log(formJSON);
     if (!summoner || !username || !password) {
       toast.error('Please fill out all fields');
       return;
@@ -48,15 +48,15 @@ export default function About() {
       toast.error('Summoner name must be in the format of "Hide on Bush#KR"');
       return;
     }
+    const acc: Account = {
+      displayName: summoner.toString().split('#')[0],
+      displayTag: `#${summoner.toString().split('#')[1]}`,
+      username: username.toString(),
+      password: password.toString(),
+    };
+    window.electron.accountChangeHandler.sendMessage('acc:add', acc);
 
-    window.electron.textHandler.sendMessage(
-      'acc:add',
-      summoner.toString().split('#')[0],
-      `#${summoner.toString().split('#')[1]}`,
-      username.toString(),
-      password.toString()
-    );
-    window.location.href = '/home/';
+    window.location.href = '/';
   };
 
   return (
