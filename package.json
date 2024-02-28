@@ -1,6 +1,5 @@
 {
   "description": "League Account Manager",
-  "homepage": "https://github.com/electron-react-boilerplate/electron-react-boilerplate#readme",
   "repository": {
     "type": "git",
     "url": "https://github.com/timonkobusch/league-account-manager"

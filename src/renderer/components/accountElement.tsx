@@ -6,24 +6,52 @@ import {
 import { Link } from 'react-router-dom';
 import { Account } from '../../interface/accounts.interface';
 
-const rankedIcon = require('../../../assets/rankIcons/Diamond.webp').default;
+const UnrankedIcon = require('../../../assets/rankIcons/Unranked.webp').default;
+const BronzeIcon = require('../../../assets/rankIcons/Bronze.webp').default;
+const SilverIcon = require('../../../assets/rankIcons/Silver.webp').default;
+const GoldIcon = require('../../../assets/rankIcons/Gold.webp').default;
+const PlatinumIcon = require('../../../assets/rankIcons/Platinum.webp').default;
+const DiamondIcon = require('../../../assets/rankIcons/Diamond.webp').default;
+const MasterIcon = require('../../../assets/rankIcons/Master.webp').default;
+const GrandmasterIcon =
+  require('../../../assets/rankIcons/Grandmaster.webp').default;
+const ChallengerIcon =
+  require('../../../assets/rankIcons/Challenger.webp').default;
+
+interface RankedIcons {
+  [key: string]: string;
+}
+const rankedIcons: RankedIcons = {
+  Unranked: UnrankedIcon,
+  Bronze: BronzeIcon,
+  Silver: SilverIcon,
+  Gold: GoldIcon,
+  Platinum: PlatinumIcon,
+  Diamond: DiamondIcon,
+  Master: MasterIcon,
+  Grandmaster: GrandmasterIcon,
+  Challenger: ChallengerIcon,
+};
 
 export default function AccountElement({ account }: { account: Account }) {
-  const writeClipboard = (text: string) => {
+  const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
   };
 
   const deleteAccount = () => {
     window.electron.accountChangeHandler.sendMessage('acc:delete', account);
   };
+
   const lpString = account.data?.solo?.lp.toString() || '0';
   const leagueString = account.data?.solo?.league || 'Unranked';
+  const rankedIcon = rankedIcons[leagueString.split(' ')[0]];
   const wins = account.data?.solo?.win || 0;
   const losses = account.data?.solo?.lose || 0;
   let winrate = 0;
   if (losses !== 0) {
     winrate = Math.round((wins / (wins + losses)) * 100);
   }
+
   return (
     <li className="group/item drop-shadow-lg hover:border-gray-500 border transition-all duration-150 list-none flex flex-row flex-nowrap w-full text-lg items-center justify-around rounded-xl bg-white py-4 pr-0 pl-4">
       <div className="max-h-24 gap-1 flex flex-col items-start w-48 font-medium">
@@ -50,7 +78,7 @@ export default function AccountElement({ account }: { account: Account }) {
           type="button"
           className="transition h-7 w-24 text-white  bg-blue-700 hover:bg-blue-800 rounded-lg px-2 py-1 text-sm"
           onClick={() => {
-            writeClipboard(account.username);
+            copyToClipboard(account.username);
           }}
         >
           username
@@ -60,7 +88,7 @@ export default function AccountElement({ account }: { account: Account }) {
           type="button"
           className="transition h-7 w-24 text-white bg-blue-700 hover:bg-blue-800 rounded-lg px-2 py-1 text-sm"
           onClick={() => {
-            writeClipboard(account.password);
+            copyToClipboard(account.password);
           }}
         >
           password
