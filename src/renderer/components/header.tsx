@@ -26,7 +26,7 @@ export default function Header(props: {
           <img className="w-14 py-2 self-center" alt="logo icon" src={logo} />
         </Link>
         <h1 className="text-3xl my-4 flex flex-row items-center gap-2 font-semibold">
-          League Accounts Manager
+          League Accounts Manager v0.3.0-alpha
         </h1>
         <div className="flex flex-row gap-2 ml-auto">
           <button
