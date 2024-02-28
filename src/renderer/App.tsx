@@ -3,12 +3,7 @@ import Header from 'renderer/components/header';
 import Add from 'renderer/pages/Register';
 import Edit from 'renderer/pages/Edit';
 import AccountList from 'renderer/components/accountList';
-import {
-  MemoryRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-} from 'react-router-dom';
+import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import '../dist/styles.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -41,6 +36,9 @@ function Main() {
       <Header handleRefresh={refreshAccounts} switchDark={switchDark} />
       <AccountList accounts={accounts} />
       <ToastContainer />
+      <div className="flex w-full p-2 justify-center">
+        <p>Timon Kobusch 2024 ©</p>
+      </div>
     </div>
   );
 }
@@ -49,8 +47,7 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Navigate to="/home" />} />
-        <Route path="/home" element={<Main />} />
+        <Route path="/" element={<Main />} />
         <Route path="/add" element={<Add />} />
         <Route path="/edit/:id" element={<Edit />} />
         <Route path="/about" element={<About />} />
