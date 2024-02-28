@@ -32,6 +32,7 @@ export default function registerListeners() {
   });
   // TODO error logging
   ipcMain.on('acc:reload', async (event) => {
+    event.reply('acc:reload', accounts);
     try {
       const updatedAccounts = await Promise.all(
         accounts.map(async (acc) => {

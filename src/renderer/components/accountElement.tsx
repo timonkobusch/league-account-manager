@@ -11,6 +11,7 @@ const BronzeIcon = require('../../../assets/rankIcons/Bronze.webp').default;
 const SilverIcon = require('../../../assets/rankIcons/Silver.webp').default;
 const GoldIcon = require('../../../assets/rankIcons/Gold.webp').default;
 const PlatinumIcon = require('../../../assets/rankIcons/Platinum.webp').default;
+const EmeraldIcon = require('../../../assets/rankIcons/Emerald.webp').default;
 const DiamondIcon = require('../../../assets/rankIcons/Diamond.webp').default;
 const MasterIcon = require('../../../assets/rankIcons/Master.webp').default;
 const GrandmasterIcon =
@@ -27,13 +28,20 @@ const rankedIcons: RankedIcons = {
   Silver: SilverIcon,
   Gold: GoldIcon,
   Platinum: PlatinumIcon,
+  Emerald: EmeraldIcon,
   Diamond: DiamondIcon,
   Master: MasterIcon,
   Grandmaster: GrandmasterIcon,
   Challenger: ChallengerIcon,
 };
 
-export default function AccountElement({ account }: { account: Account }) {
+export default function AccountElement({
+  account,
+  soloActive,
+}: {
+  account: Account;
+  soloActive: boolean;
+}) {
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
   };
@@ -42,14 +50,24 @@ export default function AccountElement({ account }: { account: Account }) {
     window.electron.accountChangeHandler.sendMessage('acc:delete', account);
   };
 
-  const lpString = account.data?.solo?.lp.toString() || '0';
-  const leagueString = account.data?.solo?.league || 'Unranked';
-  const rankedIcon = rankedIcons[leagueString.split(' ')[0]];
-  const wins = account.data?.solo?.win || 0;
-  const losses = account.data?.solo?.lose || 0;
-  let winrate = 0;
-  if (losses !== 0) {
-    winrate = Math.round((wins / (wins + losses)) * 100);
+  const SoloLp = account.data?.solo?.lp.toString() || '0';
+  const SoloLeague = account.data?.solo?.league || 'Unranked';
+  const SoloRankedIcon = rankedIcons[SoloLeague.split(' ')[0]];
+  const SoloWins = account.data?.solo?.win || 0;
+  const SoloLosses = account.data?.solo?.lose || 0;
+  let SoloWinrate = 0;
+  if (SoloLosses !== 0) {
+    SoloWinrate = Math.round((SoloWins / (SoloWins + SoloLosses)) * 100);
+  }
+
+  const FlexLp = account.data?.flex?.lp.toString() || '0';
+  const FlexLeague = account.data?.flex?.league || 'Unranked';
+  const FlexRankedIcon = rankedIcons[FlexLeague.split(' ')[0]];
+  const FlexWins = account.data?.flex?.win || 0;
+  const FlexLosses = account.data?.flex?.lose || 0;
+  let FlexWinrate = 0;
+  if (FlexLosses !== 0) {
+    FlexWinrate = Math.round((FlexWins / (FlexWins + FlexLosses)) * 100);
   }
 
   return (
@@ -60,17 +78,25 @@ export default function AccountElement({ account }: { account: Account }) {
           {account.displayTag}
         </div>
       </div>
-      <img className="h-20 w-20 mx-2" src={rankedIcon} alt="ranked icon" />
+      <img
+        className="h-20 w-20 mx-2"
+        src={soloActive ? SoloRankedIcon : FlexRankedIcon}
+        alt="ranked icon"
+      />
       <div className="w-36 bg-gray-200 drop-shadow-sm transition duration-100 rounded-lg px-2">
-        <div className="font-medium">{leagueString}</div>
-        <div>{lpString} LP</div>
+        <div className="font-medium">
+          {soloActive ? SoloLeague : FlexLeague}
+        </div>
+        <div>{soloActive ? SoloLp : FlexLp} LP</div>
       </div>
-      <div className="w-34 ml-3 mr-8 flex flex-col items-end">
+      <div className="w-36 ml-3 mr-8 flex flex-col items-end">
         <div>
-          {wins}W {losses}L
+          {soloActive ? SoloWins : FlexWins}W{' '}
+          {soloActive ? SoloLosses : FlexLosses}L
         </div>
         <div className="">
-          {winrate}% <span className="font-thin text-base">Win Rate</span>
+          {soloActive ? SoloWinrate : FlexWinrate}%{' '}
+          <span className="font-thin text-base">Win Rate</span>
         </div>
       </div>
       <div className="w-min flex flex-col gap-1 items-end">

@@ -24,16 +24,21 @@ function Main() {
   useEffect(() => {
     refreshAccounts();
   }, []);
-
   const [accounts, setAccounts] = useState([] as Account[]);
+  const [dark, setDark] = useState(false);
+
+  const switchDark = () => {
+    document.documentElement.classList.toggle('dark');
+    setDark(!dark);
+  };
 
   window.electron.accountLoadHandler.once('acc:reload', (accs: Account[]) => {
     setAccounts(accs);
   });
 
   return (
-    <div className="px-4">
-      <Header handleRefresh={refreshAccounts} />
+    <div className="px-4 dark:bg-slate-600 h-full">
+      <Header handleRefresh={refreshAccounts} switchDark={switchDark} />
       <AccountList accounts={accounts} />
       <ToastContainer />
     </div>

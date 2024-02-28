@@ -37,7 +37,6 @@ async function readFlexData(htmlDocument: Document) {
       league,
     };
   } catch (e) {
-    console.error('Error reading flex data from html:', e);
     return undefined;
   }
 }
@@ -77,7 +76,6 @@ async function readSoloData(htmlDocument: Document) {
       league,
     };
   } catch (e) {
-    console.error('Error reading solo data from html:', e);
     return undefined;
   }
 }
