@@ -69,11 +69,14 @@ export default function AccountElement({
   if (FlexLosses !== 0) {
     FlexWinrate = Math.round((FlexWins / (FlexWins + FlexLosses)) * 100);
   }
-
   return (
     <li className="group/item drop-shadow-lg hover:border-gray-500 border transition-all duration-150 list-none flex flex-row flex-nowrap w-full text-lg items-center justify-around rounded-xl bg-white py-4 pr-0 pl-4">
-      <div className="max-h-24 gap-1 flex flex-col items-start w-48 font-medium">
-        <div className="font-medium">{account.displayName}</div>
+      <div className="max-h-24 gap-1 flex flex-col items-start w-44 font-medium">
+        <div
+          className={account.displayName.length > 14 ? 'text-sm' : 'text-md'}
+        >
+          {account.displayName}
+        </div>
         <div className="flex items-center justify-center font-medium h-7 text-blue-700 border border-blue-700 rounded-lg px-2 py-1 text-sm">
           {account.displayTag}
         </div>
