@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { MdOutlineArrowBackIos } from 'react-icons/md';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
@@ -66,6 +66,7 @@ const InputField = ({
 };
 // TODO add server selection
 export default function Edit() {
+  const navigate = useNavigate();
   const { id } = useParams();
 
   const [account, setAccount] = useState({} as Account);
@@ -113,7 +114,7 @@ export default function Edit() {
     };
 
     window.electron.accountChangeHandler.sendMessage('acc:edit', acc);
-    window.location.href = '/home/';
+    navigate('/');
   };
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

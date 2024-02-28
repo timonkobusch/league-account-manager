@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { MdOutlineArrowBackIos } from 'react-icons/md';
 import { FormEvent } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
@@ -33,7 +33,8 @@ const InputField = ({
   );
 };
 
-export default function About() {
+export default function Register() {
+  const navigate = useNavigate();
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
@@ -56,8 +57,7 @@ export default function About() {
       server: 'euw',
     };
     window.electron.accountChangeHandler.sendMessage('acc:add', acc);
-
-    window.location.href = '/';
+    navigate('/');
   };
 
   return (
