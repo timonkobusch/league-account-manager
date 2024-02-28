@@ -53,6 +53,7 @@ export default function About() {
       displayTag: `#${summoner.toString().split('#')[1]}`,
       username: username.toString(),
       password: password.toString(),
+      server: 'euw',
     };
     window.electron.accountChangeHandler.sendMessage('acc:add', acc);
 

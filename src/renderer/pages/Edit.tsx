@@ -64,7 +64,7 @@ const InputField = ({
     </div>
   );
 };
-
+// TODO add server selection
 export default function Edit() {
   const { id } = useParams();
 
@@ -109,6 +109,7 @@ export default function Edit() {
       displayName: summoner.toString().split('#')[0],
       displayTag: `#${summoner.toString().split('#')[1]}`,
       password: password.toString(),
+      server: 'euw',
     };
 
     window.electron.accountChangeHandler.sendMessage('acc:edit', acc);

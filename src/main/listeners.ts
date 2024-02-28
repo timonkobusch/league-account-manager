@@ -1,26 +1,44 @@
 /* eslint-disable no-console */
-import { ipcMain } from 'electron';
+import { app, ipcMain } from 'electron';
 import getAccountData from './scraper/scrapeLolalytics';
 import { Account } from '../interface/accounts.interface';
 
 const fs = require('fs');
 const path = require('path');
 
+const ACCOUNT_DATA_PATH = `${app.getPath(
+  'appData'
+)}\\League Account Manager\\accounts.json`;
+console.log(ACCOUNT_DATA_PATH);
+
 function readAccountsFromFile() {
-  const data = fs.readFileSync(
-    path.join(__dirname, '../renderer/accounts.json'),
-    'utf-8'
-  );
-  return JSON.parse(data);
+  try {
+    // Ensure directory exists
+    const dir = path.dirname(ACCOUNT_DATA_PATH);
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true });
+    }
+
+    // Check if the file exists
+    if (!fs.existsSync(ACCOUNT_DATA_PATH)) {
+      // If the file doesn't exist, create an empty file
+      fs.writeFileSync(ACCOUNT_DATA_PATH, '[]', 'utf-8');
+      return []; // Return an empty array
+    }
+
+    // If the file exists, read its contents and parse the JSON
+    const data = fs.readFileSync(ACCOUNT_DATA_PATH, 'utf-8');
+    return JSON.parse(data);
+  } catch (error) {
+    // Handle errors, such as file read or write errors
+    console.error('Error reading accounts file:', error);
+    return []; // Return an empty array in case of errors
+  }
 }
 
 function writeAccountsToFile(accounts: Account[]) {
   const data = JSON.stringify(accounts, null, 2);
-  fs.writeFileSync(
-    path.join(__dirname, '../renderer/accounts.json'),
-    data,
-    'utf-8'
-  );
+  fs.writeFileSync(ACCOUNT_DATA_PATH, data, 'utf-8');
 }
 
 export default function registerListeners() {
@@ -58,6 +76,9 @@ export default function registerListeners() {
 
   ipcMain.on('acc:load', async (event, id) => {
     const account = accounts.find((acc) => acc.username === id);
+
+    console.log(app.getPath('userData'));
+
     event.reply('acc:load', [account]);
   });
 
