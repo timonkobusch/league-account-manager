@@ -20,7 +20,7 @@ function Main() {
     refreshAccounts();
   }, []);
   const [accounts, setAccounts] = useState([] as Account[]);
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(true);
 
   const switchDark = () => {
     document.documentElement.classList.toggle('dark');
@@ -32,12 +32,12 @@ function Main() {
   });
 
   return (
-    <div className="px-4 dark:bg-slate-600 h-full">
+    <div className="px-4 dark:bg-zinc-900 h-full min-h-screen dark:text-zinc-300">
       <Header handleRefresh={refreshAccounts} switchDark={switchDark} />
       <AccountList accounts={accounts} />
       <ToastContainer />
       <div className="flex w-full p-2 justify-center">
-        <p>Timon Kobusch 2024 ©</p>
+        <p>Timon Kobusch 2024 © v0.3.0-alpha</p>
       </div>
     </div>
   );

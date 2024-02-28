@@ -70,14 +70,14 @@ export default function AccountElement({
     FlexWinrate = Math.round((FlexWins / (FlexWins + FlexLosses)) * 100);
   }
   return (
-    <li className="group/item drop-shadow-lg hover:border-gray-500 border transition-all duration-150 list-none flex flex-row flex-nowrap w-full text-lg items-center justify-around rounded-xl bg-white py-4 pr-0 pl-4">
+    <li className="group/item drop-shadow-lg hover:border-gray-500 dark:border-zinc-700 border transition-all duration-150 list-none flex flex-row flex-nowrap w-full text-lg items-center justify-around rounded-xl bg-white dark:bg-zinc-800 py-4 pr-0 pl-4">
       <div className="max-h-24 gap-1 flex flex-col items-start w-44 font-medium">
         <div
           className={account.displayName.length > 14 ? 'text-sm' : 'text-md'}
         >
           {account.displayName}
         </div>
-        <div className="flex items-center justify-center font-medium h-7 text-blue-700 border border-blue-700 rounded-lg px-2 py-1 text-sm">
+        <div className="flex items-center justify-center dark:bg-zinc-800 font-medium h-7 text-blue-700 dark:text-blue-600 border border-blue-700 dark:border-blue-600 rounded-lg px-2 py-1 text-sm">
           {account.displayTag}
         </div>
       </div>
@@ -86,7 +86,7 @@ export default function AccountElement({
         src={soloActive ? SoloRankedIcon : FlexRankedIcon}
         alt="ranked icon"
       />
-      <div className="w-36 bg-gray-200 drop-shadow-sm transition duration-100 rounded-lg px-2">
+      <div className="w-36 bg-zinc-400 dark:bg-zinc-600 dark:border dark:border-gray-800 drop-shadow-sm transition duration-100 rounded-lg px-2">
         <div className="font-medium">
           {soloActive ? SoloLeague : FlexLeague}
         </div>
@@ -105,7 +105,7 @@ export default function AccountElement({
       <div className="w-min flex flex-col gap-1 items-end">
         <button
           type="button"
-          className="transition h-7 w-24 text-white  bg-blue-700 hover:bg-blue-800 rounded-lg px-2 py-1 text-sm"
+          className="transition h-7 w-24 text-white  bg-blue-700 dark:bg-blue-900 hover:bg-blue-800 rounded-lg px-2 py-1 text-sm"
           onClick={() => {
             copyToClipboard(account.username);
           }}
@@ -115,7 +115,7 @@ export default function AccountElement({
 
         <button
           type="button"
-          className="transition h-7 w-24 text-white bg-blue-700 hover:bg-blue-800 rounded-lg px-2 py-1 text-sm"
+          className="transition h-7 w-24 text-white bg-blue-700 dark:bg-blue-900 hover:bg-blue-800 rounded-lg px-2 py-1 text-sm"
           onClick={() => {
             copyToClipboard(account.password);
           }}

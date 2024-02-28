@@ -7,11 +7,11 @@ export default function AccountList({ accounts }: { accounts: Account[] }) {
   return (
     <>
       <div className="flex w-full mb-2">
-        <div className="flex rounded-md border border-blue-700 bg-white text-blue-700 hover:bg-gray-100 shadow-sm">
+        <div className="flex font-medium rounded-md border border-blue-700 dark:border-blue-800 bg-white dark:bg-zinc-200 text-blue-700 dark:text-blue-800 hover:bg-gray-100 shadow-sm">
           <button
             type="button"
-            className={`border-r border-blue-700 p-2${
-              soloActive ? ' bg-blue-700 text-white' : ''
+            className={`border-r border-blue-700 px-2 py-1 ${
+              soloActive ? ' bg-blue-700 dark:bg-blue-800 text-white' : ''
             }`}
             onClick={() => {
               setSoloActive(true);
@@ -21,7 +21,7 @@ export default function AccountList({ accounts }: { accounts: Account[] }) {
           </button>
           <button
             type="button"
-            className={`p-2 ${!soloActive ? ' bg-blue-700 text-white' : ''}`}
+            className={`px-2 ${!soloActive ? ' bg-blue-700 text-white' : ''}`}
             onClick={() => {
               setSoloActive(false);
             }}
