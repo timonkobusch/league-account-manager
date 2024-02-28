@@ -22,7 +22,9 @@ export default function Header(props: {
   return (
     <div>
       <div className="flex gap-3 w-full mt-2 mb-2 ">
-        <img className="w-14 py-2 self-center" alt="logo icon" src={logo} />
+        <Link to="/about">
+          <img className="w-14 py-2 self-center" alt="logo icon" src={logo} />
+        </Link>
         <h1 className="text-3xl my-4 flex flex-row items-center gap-2 font-semibold">
           League Accounts Manager
         </h1>
