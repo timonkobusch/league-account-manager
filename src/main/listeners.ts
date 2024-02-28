@@ -9,7 +9,6 @@ const path = require('path');
 const ACCOUNT_DATA_PATH = `${app.getPath(
   'appData'
 )}\\League Account Manager\\accounts.json`;
-console.log(ACCOUNT_DATA_PATH);
 
 function readAccountsFromFile() {
   try {
@@ -77,14 +76,20 @@ export default function registerListeners() {
   ipcMain.on('acc:load', async (event, id) => {
     const account = accounts.find((acc) => acc.username === id);
 
-    console.log(app.getPath('userData'));
-
     event.reply('acc:load', [account]);
   });
 
   ipcMain.on('acc:edit', async (event, user) => {
     accounts.forEach((account, index) => {
       if (account.username === user.username) {
+        if (
+          account.password === user.password &&
+          account.server === user.server &&
+          account.displayName === user.displayName &&
+          account.displayTag === user.displayTag
+        ) {
+          return;
+        }
         accounts[index] = user;
       }
     });
