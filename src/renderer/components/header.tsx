@@ -21,13 +21,14 @@ export default function Header(props: {
 
   return (
     <div>
-      <div className="flex gap-3 w-full pt-2 mb-2 ">
+      <div className="flex gap-3 w-full pt-2 mb-2 items-center ">
         <Link to="/about">
           <img className="w-14 py-2 self-center" alt="logo icon" src={logo} />
         </Link>
-        <h1 className="text-3xl my-4 flex flex-row items-center gap-2 font-semibold">
-          League Accounts Manager
-        </h1>
+        <div className="">
+          <h1 className="text-3xl font-semibold">League Account Manager</h1>
+          <div> v0.4.0-alpha</div>
+        </div>
         <div className="flex flex-row gap-2 ml-auto">
           <button
             type="button"
@@ -37,7 +38,7 @@ export default function Header(props: {
             <FiMoon />
           </button>
           <Link
-            to="/add"
+            to="/register"
             className="rounded-md border border-gray-500 dark:border-zinc-700 bg-white dark:bg-zinc-800 p-2 shadow-sm ml-auto self-center hover:bg-gray-100"
           >
             <BiPlus />

@@ -1,6 +1,6 @@
 import About from 'renderer/pages/About';
 import Header from 'renderer/components/header';
-import Add from 'renderer/pages/Register';
+import Register from 'renderer/pages/Register';
 import Edit from 'renderer/pages/Edit';
 import AccountList from 'renderer/components/accountList';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
@@ -20,10 +20,22 @@ function Main() {
     refreshAccounts();
   }, []);
   const [accounts, setAccounts] = useState([] as Account[]);
-  const [dark, setDark] = useState(true);
 
+  const savedDarkMode = JSON.parse(localStorage.getItem('dark') || 'true');
+  const [dark, setDark] = useState(savedDarkMode);
+
+  useEffect(() => {
+    localStorage.setItem('dark', JSON.stringify(dark));
+  }, [dark]);
+
+  useEffect(() => {
+    if (dark) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [dark]);
   const switchDark = () => {
-    document.documentElement.classList.toggle('dark');
     setDark(!dark);
   };
 
@@ -37,7 +49,7 @@ function Main() {
       <AccountList accounts={accounts} />
       <ToastContainer />
       <div className="flex w-full p-2 justify-center">
-        <p>Timon Kobusch 2024 © v0.3.0-alpha</p>
+        <p>Timon Kobusch 2024 ©</p>
       </div>
     </div>
   );
@@ -48,7 +60,7 @@ export default function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/add" element={<Add />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/edit/:id" element={<Edit />} />
         <Route path="/about" element={<About />} />
       </Routes>

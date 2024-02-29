@@ -18,12 +18,12 @@ const InputField = ({
   return (
     <div>
       <label
-        className="block text-gray-700 text-sm font-semibold mb-2"
+        className="block text-gray-700 dark:text-zinc-300 text-sm font-semibold mb-2"
         htmlFor={id}
       >
         {label}
         <input
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="shadow appearance-none border rounded w-full py-2 px-3 dark:border-zinc-700 dark:bg-zinc-800 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           name={id}
           type={type ?? 'text'}
           placeholder={placeholder}
@@ -61,11 +61,11 @@ export default function Register() {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 dark:bg-zinc-900 dark:text-zinc-300 min-h-screen">
       <ToastContainer />
       <div className="flex items-center gap-2 mb-6">
         <Link to="/">
-          <div className="flex justify-center items-center rounded-md border border-gray-500 bg-white shadow-sm w-8 h-8 hover:bg-gray-100">
+          <div className="flex justify-center items-center rounded-md border dark:border-zinc-700 dark:bg-zinc-800 border-gray-500 bg-white  shadow-sm w-8 h-8 hover:bg-gray-100">
             <MdOutlineArrowBackIos />
           </div>
         </Link>
@@ -99,7 +99,7 @@ export default function Register() {
 
           <div className="flex items-center justify-between mt-8">
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              className="bg-blue-500 hover:bg-blue-700 dark:bg-blue-900 dark:hover:bg-blue-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
               type="submit"
             >
               Register Account

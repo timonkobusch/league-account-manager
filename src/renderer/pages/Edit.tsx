@@ -11,7 +11,7 @@ const Header = () => {
       <ToastContainer />
       <div className="flex items-center gap-2 mb-6">
         <Link to="/">
-          <div className="flex justify-center items-center rounded-md border border-gray-500 bg-white shadow-sm w-8 h-8 hover:bg-gray-100">
+          <div className="flex justify-center items-center rounded-md border dark:border-zinc-700 dark:bg-zinc-800 border-gray-500 bg-white shadow-sm w-8 h-8 hover:bg-gray-100">
             <MdOutlineArrowBackIos />
           </div>
         </Link>
@@ -39,13 +39,13 @@ const InputField = ({
   return (
     <div className="w-2/4">
       <label
-        className="block text-gray-700 text-sm font-semibold mb-2"
+        className="block text-gray-700 dark:text-zinc-300 text-sm font-semibold mb-2 "
         htmlFor={id}
       >
         {label}
         <div>
           <input
-            className="shadow appearance-none border rounded w-64 py-2 px-3 mr-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="shadow appearance-none border rounded w-64 py-2 px-3 mr-4 text-gray-700 leading-tight dark:border-zinc-700 dark:bg-zinc-800 focus:outline-none focus:shadow-outline"
             name={id}
             onChange={onChange}
             style={{
@@ -125,13 +125,13 @@ export default function Edit() {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 dark:bg-zinc-900 dark:text-zinc-300 min-h-screen ">
       <Header />
       <form onSubmit={handleSubmit} className="flex flex-col">
         <div className="flex flex-col p-8 gap-4">
           <div>
             <div>Username</div>
-            <div className="font-semibold text-lg">{account.username}</div>
+            <div className="font-bold mb-2 text-lg">{account.username}</div>
           </div>
           <InputField
             label="Summoner Name"
@@ -148,7 +148,7 @@ export default function Edit() {
             onChange={handleChange}
           />
           <button
-            className="w-48 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="w-48 bg-blue-500 hover:bg-blue-700 dark:bg-blue-900 dark:hover:bg-blue-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
           >
             Save Changes
