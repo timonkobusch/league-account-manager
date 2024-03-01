@@ -2,7 +2,7 @@
 // @ts-nocheck
 /* tslint:disable */
 // TODO fix tslint errors
-import { Account, Data } from '../../interface/accounts.interface';
+import { Account, IData } from '../../interface/accounts.interface';
 
 const { JSDOM } = require('jsdom');
 
@@ -93,7 +93,7 @@ export default async function getAccountData(acc: Account) {
     const data = {
       solo: soloData,
       flex: flexData,
-    } as Data;
+    } as IData;
     return data;
   } catch (err) {
     console.error('Request failed ERRO!R:', err);

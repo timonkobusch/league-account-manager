@@ -4,7 +4,7 @@ export interface IQueueData {
   win?: number;
   lose?: number;
 }
-export interface Data {
+export interface IData {
   solo?: IQueueData;
   flex?: IQueueData;
 }
@@ -15,5 +15,5 @@ export type Account = {
   server: string;
   displayName: string;
   displayTag: string;
-  data?: Data;
+  data?: IData;
 };
