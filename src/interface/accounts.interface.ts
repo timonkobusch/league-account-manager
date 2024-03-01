@@ -1,12 +1,12 @@
-interface QueueData {
-  league: string;
-  lp: number;
-  win: number;
-  lose: number;
+export interface IQueueData {
+  league?: string;
+  lp?: number;
+  win?: number;
+  lose?: number;
 }
 export interface Data {
-  solo?: QueueData;
-  flex?: QueueData;
+  solo?: IQueueData;
+  flex?: IQueueData;
 }
 
 export type Account = {
