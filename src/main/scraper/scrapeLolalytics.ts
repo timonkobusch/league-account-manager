@@ -2,6 +2,7 @@
 // @ts-nocheck
 /* tslint:disable */
 // TODO fix tslint errors
+import fetch from 'electron-fetch';
 import { Account, IData } from '../../interface/accounts.interface';
 
 const { JSDOM } = require('jsdom');
