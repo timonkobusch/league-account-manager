@@ -1,4 +1,5 @@
 import { FiRefreshCcw, FiMoon } from 'react-icons/fi';
+import { MdInput } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { BiPlus } from 'react-icons/bi';
 import { useState } from 'react';
@@ -7,8 +8,11 @@ import logo from '../../../assets/logo.png';
 export default function Header(props: {
   handleRefresh: () => void;
   switchDark: () => void;
+  autoLoginActive: boolean;
+  setAutoLoginActive: (arg0: boolean) => void;
 }) {
-  const { handleRefresh, switchDark } = props;
+  const { handleRefresh, switchDark, autoLoginActive, setAutoLoginActive } =
+    props;
 
   const [isActive, setActive] = useState(false);
 
@@ -19,6 +23,11 @@ export default function Header(props: {
     }, 500);
   }
 
+  const handleAutoLoginToggle = () => {
+    localStorage.setItem('autoLogin', JSON.stringify(!autoLoginActive));
+    setAutoLoginActive(!autoLoginActive);
+  };
+
   return (
     <div>
       <div className="flex gap-3 w-full pt-2 mb-2 items-center ">
@@ -27,9 +36,20 @@ export default function Header(props: {
         </Link>
         <div className="">
           <h1 className="text-3xl font-semibold">League Account Manager</h1>
-          <div> v0.4.0-alpha</div>
+          <div> v1.1</div>
         </div>
         <div className="flex flex-row gap-2 ml-auto">
+          <button
+            type="button"
+            className={`rounded-md border border-gray-500 dark:border-zinc-700 bg-white dark:bg-zinc-800 p-2 shadow-sm ml-auto self-center hover:bg-gray-100 transition${
+              autoLoginActive
+                ? ' dark:bg-green-700 bg-green-400'
+                : 'dark:bg-zinc-800'
+            }`}
+            onClick={handleAutoLoginToggle}
+          >
+            <MdInput />
+          </button>
           <button
             type="button"
             className="rounded-md border border-gray-500 dark:border-zinc-700 bg-white dark:bg-zinc-800 p-2 shadow-sm ml-auto self-center hover:bg-gray-100 transition"

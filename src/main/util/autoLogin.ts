@@ -1,0 +1,62 @@
+import {
+  getActiveWindow,
+  Key,
+  keyboard,
+  mouse,
+  screen,
+  pixelWithColor,
+  RGBA,
+  Point,
+} from '@nut-tree-fork/nut-js';
+import { clipboard } from 'electron';
+
+async function focusLeagueClient() {
+  try {
+    const location = await screen.find(
+      pixelWithColor(new RGBA(235, 0, 41, 255))
+    );
+    await mouse.setPosition(location);
+    await mouse.leftClick();
+  } catch (e) {
+    return false;
+  }
+  return true;
+}
+
+async function inputCredentials(username: string, password: string) {
+  let windowRef;
+  while (true) {
+    windowRef = await getActiveWindow();
+    const title = await windowRef.title;
+    if (title === 'Riot Client') {
+      break;
+    }
+  }
+
+  const region = await windowRef.region;
+  await mouse.setPosition(new Point(region.left + 100, region.top + 250));
+  await mouse.leftClick();
+  await mouse.leftClick();
+  clipboard.writeText(username);
+  await keyboard.type(Key.LeftControl, Key.V);
+
+  await keyboard.type(Key.Tab);
+  clipboard.writeText(password);
+  await keyboard.type(Key.LeftControl, Key.V);
+}
+
+async function autoLogin(username: string, password: string) {
+  keyboard.config.autoDelayMs = 0;
+  const foundClient = await focusLeagueClient();
+  if (!foundClient) {
+    return {
+      success: false,
+      message: 'Could not find League Client. Is it open?',
+    };
+  }
+  await inputCredentials(username, password);
+  const message = 'Account ' + username + ' logged in.';
+  return { success: true, message: message };
+}
+
+export default autoLogin;

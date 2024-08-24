@@ -2,6 +2,7 @@
 import { app, ipcMain } from 'electron';
 import getAccountData from './scraper/scrapeLolalytics';
 import { Account } from '../interface/accounts.interface';
+import autoLogin from './util/autoLogin';
 
 const fs = require('fs');
 const path = require('path');
@@ -41,14 +42,17 @@ function writeAccountsToFile(accounts: Account[]) {
 }
 
 export default function registerListeners() {
-  const accounts: Account[] = readAccountsFromFile();
+  let accounts: Account[] = readAccountsFromFile();
 
   ipcMain.on('acc:add', async (event, acc) => {
     accounts.push(acc);
     writeAccountsToFile(accounts);
   });
+  // TODO release popup
+  // TODO full screen
   // TODO error logging
   ipcMain.on('acc:reload', async (event) => {
+    readAccountsFromFile();
     event.reply('acc:reload', accounts);
     try {
       const updatedAccounts = await Promise.all(
@@ -66,13 +70,23 @@ export default function registerListeners() {
           }
         })
       );
+      accounts = updatedAccounts;
       writeAccountsToFile(updatedAccounts);
       event.reply('acc:reload', updatedAccounts);
     } catch (error) {
       console.error('Error reloading account data:', error);
     }
   });
-
+  ipcMain.on('acc:moveToTop', async (event, user) => {
+    accounts.forEach((account, index) => {
+      if (account.username === user.username) {
+        accounts.splice(index, 1);
+        accounts.unshift(user);
+      }
+    });
+    writeAccountsToFile(accounts);
+    event.reply('acc:reload', accounts);
+  });
   ipcMain.on('acc:load', async (event, id) => {
     const account = accounts.find((acc) => acc.username === id);
 
@@ -105,5 +119,10 @@ export default function registerListeners() {
     });
     writeAccountsToFile(accounts);
     event.reply('acc:reload', accounts);
+  });
+
+  ipcMain.on('login', async (event, username, password) => {
+    const state = await autoLogin(username, password);
+    event.reply('login', state.success, state.message);
   });
 }

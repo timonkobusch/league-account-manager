@@ -84,20 +84,24 @@ export default async function getAccountData(acc: Account) {
   const tag = acc.displayTag.slice(1);
   const name = acc.displayName.replace(' ', '+');
   const url = `https://www.leagueofgraphs.com/en/summoner/${acc.server}/${name}-${tag}`;
-  try {
-    const response = await fetch(url);
-    const text = await response.text();
-    const dom = new JSDOM(text);
-    const flexData = await readFlexData(dom.window.document);
-    const soloData = await readSoloData(dom.window.document);
 
-    const data = {
-      solo: soloData,
-      flex: flexData,
-    } as IData;
-    return data;
+  let response;
+  try {
+    response = await fetch(url);
   } catch (err) {
-    console.error('Request failed ERRO!R:', err);
+    console.error('Request failed ERROR:', err);
     return undefined;
   }
+
+  const text = await response.text();
+  const dom = new JSDOM(text);
+  const flexData = await readFlexData(dom.window.document);
+  const soloData = await readSoloData(dom.window.document);
+
+  const data = {
+    solo: soloData,
+    flex: flexData,
+  } as IData;
+
+  return data;
 }

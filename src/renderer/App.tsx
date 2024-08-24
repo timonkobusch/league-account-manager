@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import '../dist/styles.css';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { Account } from '../interface/accounts.interface';
 
@@ -20,6 +20,11 @@ function Main() {
     refreshAccounts();
   }, []);
   const [accounts, setAccounts] = useState([] as Account[]);
+
+  const savedAutoLogin = JSON.parse(
+    localStorage.getItem('autoLogin') || 'false'
+  );
+  const [autoLoginActive, setAutoLoginActive] = useState(savedAutoLogin);
 
   const savedDarkMode = JSON.parse(localStorage.getItem('dark') || 'true');
   const [dark, setDark] = useState(savedDarkMode);
@@ -41,12 +46,30 @@ function Main() {
 
   window.electron.accountLoadHandler.once('acc:reload', (accs: Account[]) => {
     setAccounts(accs);
+    console.log('reload');
   });
+  useEffect(() => {
+    window.electron.loginHandler.on(
+      'login',
+      (success: boolean, message: string) => {
+        if (success) {
+          toast.success(message);
+        } else {
+          toast.error(message);
+        }
+      }
+    );
+  }, []);
 
   return (
     <div className="px-4 dark:bg-zinc-900 h-full min-h-screen dark:text-zinc-300">
-      <Header handleRefresh={refreshAccounts} switchDark={switchDark} />
-      <AccountList accounts={accounts} />
+      <Header
+        handleRefresh={refreshAccounts}
+        switchDark={switchDark}
+        autoLoginActive={autoLoginActive}
+        setAutoLoginActive={setAutoLoginActive}
+      />
+      <AccountList accounts={accounts} autoLoginActive={autoLoginActive} />
       <ToastContainer />
       <div className="flex w-full p-2 justify-center">
         <p>Timon Kobusch 2024 ©</p>
