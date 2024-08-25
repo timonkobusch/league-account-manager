@@ -7,6 +7,7 @@ import {
   pixelWithColor,
   RGBA,
   Point,
+  sleep,
 } from '@nut-tree-fork/nut-js';
 import { clipboard } from 'electron';
 
@@ -25,11 +26,17 @@ async function focusLeagueClient() {
 
 async function inputCredentials(username: string, password: string) {
   let windowRef;
+  const MAX_TRIES = 30;
+  let tries = 0;
   while (true) {
     windowRef = await getActiveWindow();
+    await sleep(100);
     const title = await windowRef.title;
     if (title === 'Riot Client') {
       break;
+    }
+    if (tries >= MAX_TRIES) {
+      return false;
     }
   }
 
@@ -43,6 +50,8 @@ async function inputCredentials(username: string, password: string) {
   await keyboard.type(Key.Tab);
   clipboard.writeText(password);
   await keyboard.type(Key.LeftControl, Key.V);
+  await keyboard.type(Key.Enter);
+  return true;
 }
 
 async function autoLogin(username: string, password: string) {
@@ -54,7 +63,13 @@ async function autoLogin(username: string, password: string) {
       message: 'Could not find League Client. Is it open?',
     };
   }
-  await inputCredentials(username, password);
+  const input_successful = await inputCredentials(username, password);
+  if (!input_successful) {
+    return {
+      success: false,
+      message: 'Could not input credentials. Is the client open?',
+    };
+  }
   const message = 'Account ' + username + ' logged in.';
   return { success: true, message: message };
 }
