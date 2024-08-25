@@ -22,7 +22,7 @@ function Main() {
   const [accounts, setAccounts] = useState([] as Account[]);
 
   const savedAutoLogin = JSON.parse(
-    localStorage.getItem('autoLogin') || 'false'
+    localStorage.getItem('autoLogin') || 'false',
   );
   const [autoLoginActive, setAutoLoginActive] = useState(savedAutoLogin);
 
@@ -46,7 +46,6 @@ function Main() {
 
   window.electron.accountLoadHandler.once('acc:reload', (accs: Account[]) => {
     setAccounts(accs);
-    console.log('reload');
   });
   useEffect(() => {
     window.electron.loginHandler.on(
@@ -57,7 +56,7 @@ function Main() {
         } else {
           toast.error(message);
         }
-      }
+      },
     );
   }, []);
 

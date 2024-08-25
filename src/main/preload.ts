@@ -2,7 +2,6 @@
 /* eslint no-unused-vars: off */
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 import { Account } from '../interface/accounts.interface';
-import { once } from 'events';
 
 export type Channels = 'acc:reload';
 export type SingleAccountChannels =
@@ -50,7 +49,7 @@ const electronHandler = {
       const subscription = (
         _event: IpcRendererEvent,
         success: boolean,
-        message: string
+        message: string,
       ) => func(success, message);
       ipcRenderer.on(channel, subscription);
 
@@ -60,7 +59,7 @@ const electronHandler = {
     },
     once(channel: 'login', func: (success: boolean, message: string) => void) {
       ipcRenderer.once(channel, (_event, success, message) =>
-        func(success, message)
+        func(success, message),
       );
     },
   },

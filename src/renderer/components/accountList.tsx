@@ -17,7 +17,7 @@ export default function AccountList({
   const [showServer, setShowServer] = useState(false);
 
   const servers = Array.from(
-    new Set(accounts.map((account) => account.server))
+    new Set(accounts.map((account) => account.server)),
   );
 
   const setServerInLocalStorage = (s: string) => {

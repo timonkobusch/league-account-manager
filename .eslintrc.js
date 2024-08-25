@@ -19,6 +19,12 @@ module.exports = {
       { namedComponents: ['arrow-function', 'function-declaration'] },
     ],
     'react/require-default-props': 'off',
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
   },
   parserOptions: {
     ecmaVersion: 2020,
@@ -40,10 +46,4 @@ module.exports = {
       '@typescript-eslint/parser': ['.ts', '.tsx'],
     },
   },
-  'prettier/prettier': [
-    'error',
-    {
-      endOfLine: 'auto',
-    },
-  ],
 };

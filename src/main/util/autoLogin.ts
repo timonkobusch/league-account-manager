@@ -9,12 +9,11 @@ import {
   Point,
   sleep,
 } from '@nut-tree-fork/nut-js';
-import { clipboard } from 'electron';
 
 async function focusLeagueClient() {
   try {
     const location = await screen.find(
-      pixelWithColor(new RGBA(235, 0, 41, 255))
+      pixelWithColor(new RGBA(235, 0, 41, 255)),
     );
     await mouse.setPosition(location);
     await mouse.leftClick();
@@ -28,18 +27,23 @@ async function inputCredentials(username: string, password: string) {
   let windowRef;
   const MAX_TRIES = 30;
   let tries = 0;
-  while (true) {
+  let title = '';
+  while (title === 'Riot Client') {
+    /* eslint-disable no-await-in-loop */
     windowRef = await getActiveWindow();
     await sleep(100);
-    const title = await windowRef.title;
+    title = await windowRef.title;
     if (title === 'Riot Client') {
       break;
     }
     if (tries >= MAX_TRIES) {
       return false;
     }
+    tries += 1;
   }
-
+  if (!windowRef) {
+    return false;
+  }
   const region = await windowRef.region;
   await mouse.setPosition(new Point(region.left + 100, region.top + 250));
   await mouse.leftClick();
@@ -60,15 +64,15 @@ async function autoLogin(username: string, password: string) {
       message: 'Could not find League Client. Is it open?',
     };
   }
-  const input_successful = await inputCredentials(username, password);
-  if (!input_successful) {
+  const inputSuccessful = await inputCredentials(username, password);
+  if (!inputSuccessful) {
     return {
       success: false,
       message: 'Could not input credentials. Is the client open?',
     };
   }
-  const message = 'Account ' + username + ' logged in.';
-  return { success: true, message: message };
+  const message = `Account ${username} logged in.`;
+  return { success: true, message };
 }
 
 export default autoLogin;

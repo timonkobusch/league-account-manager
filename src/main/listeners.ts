@@ -8,7 +8,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ACCOUNT_DATA_PATH = `${app.getPath(
-  'appData'
+  'appData',
 )}\\League Account Manager\\accounts.json`;
 
 function readAccountsFromFile() {
@@ -63,12 +63,12 @@ export default function registerListeners() {
           } catch (error) {
             console.error(
               `Error reloading data for account ${acc.username}:`,
-              error
+              error,
             );
             // If an error occurs, return the original account without data
             return acc;
           }
-        })
+        }),
       );
       accounts = updatedAccounts;
       writeAccountsToFile(updatedAccounts);

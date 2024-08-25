@@ -41,6 +41,7 @@ export default function Header(props: {
         <div className="flex flex-row gap-2 ml-auto">
           <button
             type="button"
+            aria-label='Toggle "Auto Login" feature'
             className={`rounded-md border border-gray-500 dark:border-zinc-700 bg-white dark:bg-zinc-800 p-2 shadow-sm ml-auto self-center hover:bg-gray-100 transition${
               autoLoginActive
                 ? ' dark:bg-green-700 bg-green-400'
@@ -52,6 +53,7 @@ export default function Header(props: {
           </button>
           <button
             type="button"
+            aria-label='Toggle "Dark Mode" feature'
             className="rounded-md border border-gray-500 dark:border-zinc-700 bg-white dark:bg-zinc-800 p-2 shadow-sm ml-auto self-center hover:bg-gray-100 transition"
             onClick={switchDark}
           >
@@ -65,6 +67,7 @@ export default function Header(props: {
           </Link>
           <button
             type="button"
+            aria-label="Refresh the page"
             className="rounded-md border border-gray-500 dark:border-zinc-700 bg-white dark:bg-zinc-800 p-2 shadow-sm ml-auto self-center hover:bg-gray-100 transition"
             onClick={() => {
               handleRefresh();

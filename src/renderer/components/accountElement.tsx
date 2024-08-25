@@ -131,7 +131,7 @@ export default function AccountElement({
         color,
       };
     },
-    [account.displayName, account.displayTag, account.server]
+    [account.displayName, account.displayTag, account.server],
   );
 
   const stats = useMemo(() => {
@@ -209,6 +209,7 @@ export default function AccountElement({
       <div className="group/edit w-8 h-24 ml-auto pr-3 flex flex-col items-end gap-2">
         <button
           type="button"
+          aria-label="Show more options"
           className="group-hover/edit:opacity-0 transition duration-150 ease-in-out "
         >
           <AiOutlineMore size={20} />
@@ -216,6 +217,7 @@ export default function AccountElement({
 
         <button
           type="button"
+          aria-label="Move account to top"
           className="opacity-0 group-hover/edit:opacity-100 group-hover/edit:translate-y-0 -translate-y-3 hover:text-green-500 hover:text-bold transition duration-150 ease-in-out"
           onClick={() => {
             accountMoveToTop();
@@ -232,6 +234,7 @@ export default function AccountElement({
         </Link>
         <button
           type="button"
+          aria-label="Delete account"
           className="opacity-0 group-hover/edit:opacity-100 group-hover/edit:translate-y-0 -translate-y-3 hover:text-red-500 hover:text-bold transition duration-150 ease-in-out"
           onClick={() => {
             setShowDelete(true);

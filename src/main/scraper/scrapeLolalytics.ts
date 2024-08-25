@@ -20,15 +20,15 @@ async function readFlexData(htmlDocument: Document) {
       .textContent.trim();
     const lp = parseInt(
       rankingProfile.querySelector('.leaguePoints').textContent.trim(),
-      10
+      10,
     );
     const win = parseInt(
       rankingProfile.querySelector('.winsNumber').textContent.trim(),
-      10
+      10,
     );
     const lose = parseInt(
       rankingProfile.querySelector('.lossesNumber').textContent.trim(),
-      10
+      10,
     );
 
     return {
@@ -45,7 +45,7 @@ async function readFlexData(htmlDocument: Document) {
 async function readSoloData(htmlDocument: Document) {
   try {
     const rankingProfile = htmlDocument.querySelector(
-      '.mainRankingDescriptionText'
+      '.mainRankingDescriptionText',
     );
     if (!rankingProfile) {
       throw new Error('Solo ranking profile not found');
@@ -63,11 +63,11 @@ async function readSoloData(htmlDocument: Document) {
 
     const win = parseInt(
       rankingProfile.querySelector('.winslosses .wins span').textContent,
-      10
+      10,
     );
     const lose = parseInt(
       rankingProfile.querySelector('.winslosses .losses span').textContent,
-      10
+      10,
     );
 
     return {
