@@ -22,6 +22,7 @@ class AppUpdater {
     log.transports.file.level = 'info';
     autoUpdater.logger = log;
     autoUpdater.checkForUpdatesAndNotify();
+    autoUpdater.autoDownload = true;
   }
 }
 
