@@ -36,7 +36,7 @@ export default function Header(props: {
         </Link>
         <div className="">
           <h1 className="text-3xl font-semibold">League Account Manager</h1>
-          <div> v0.6-alpha</div>
+          <div> v0.7-alpha</div>
         </div>
         <div className="flex flex-row gap-2 ml-auto">
           <button
