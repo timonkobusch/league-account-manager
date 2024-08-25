@@ -43,13 +43,10 @@ async function inputCredentials(username: string, password: string) {
   const region = await windowRef.region;
   await mouse.setPosition(new Point(region.left + 100, region.top + 250));
   await mouse.leftClick();
-  await mouse.leftClick();
-  clipboard.writeText(username);
-  await keyboard.type(Key.LeftControl, Key.V);
-
+  await keyboard.type(Key.LeftControl, Key.A);
+  await keyboard.type(username);
   await keyboard.type(Key.Tab);
-  clipboard.writeText(password);
-  await keyboard.type(Key.LeftControl, Key.V);
+  await keyboard.type(password);
   await keyboard.type(Key.Enter);
   return true;
 }
